@@ -1,0 +1,160 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guess Number</title>
+    <style>
+        .container {
+            width: 500px;
+            background-color: violet;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .inner-container {
+            text-align: center;
+        }
+        h1 {
+            text-align: center;
+        }
+        input{
+          width: 40px;
+          height: 40px;
+          padding: 10px;
+          font-size: 20px;
+          margin: 5px;
+          text-align: center;
+        }
+        #validate, #clear, #reload {
+            padding: 10px;
+            margin: 15px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        button:hover{
+          background-color: brown;
+          color: white;
+        }
+        #isValid {
+            font-size: 20px;
+            text-align: center;
+        }
+        p{
+            font-size: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Guess the number</h1>
+        <div class="inner-container">
+            <input type="text" id="num1" maxlength="1">
+            <input type="text" id="num2" maxlength="1">
+            <input type="text" id="num3" maxlength="1">
+            <input type="text" id="num4" maxlength="1">
+            <button id="validate" onclick="validate()">Validate</button>
+            <!-- <button id="clear" onclick="clearFields()">Clear</button> -->
+            <button id="reload" onclick="generateRandomNumbers()">Clear & Reload</button>
+        </div>
+        <h3 id="isValid"></h3>
+    </div>
+    <script>
+        let num1, num2, num3, num4, count
+        function generateRandomNumbers() {
+            clearFields()
+            num1 = parseInt(Math.random()*10)
+            count=0
+            while(true){
+              num2 = parseInt(Math.random()*10)
+              if(num2 !== num1){
+                  break
+              }
+            }
+
+            while(true){
+              num3 = parseInt(Math.random()*10)
+              if(num3 !== num1 && num3 !== num2){
+                  break
+              }
+            }
+
+            while(true){
+              num4 = parseInt(Math.random()*10)
+              if(num4 !== num1 && num4 !== num2 && num4 !== num3){
+                  break
+              }
+            }
+          }
+
+          generateRandomNumbers();
+
+          function validate() {
+            let inpNUm1 = parseInt(document.getElementById('num1').value);
+            let inpNUm2 = parseInt(document.getElementById('num2').value);
+            let inpNUm3 = parseInt(document.getElementById('num3').value);
+            let inpNUm4 = parseInt(document.getElementById('num4').value);
+            count=count+1
+
+            if (isNaN(inpNUm1) || isNaN(inpNUm2) || isNaN(inpNUm3) || isNaN(inpNUm4)) {
+                document.getElementById('isValid').innerText = "Input cannot be left blank"
+                // document.getElementById('isValid').style.color = 'yellow'
+                return;
+            }
+            if (typeof inpNUm1 !== 'number'|| typeof inpNUm2 !== 'number' || typeof inpNUm3 !== 'number' || typeof inpNUm4 !== 'number') {
+                document.getElementById('isValid').innerText = "Input should be a number";
+                // document.getElementById('isValid').style.color = 'yellow'
+                return;
+            }
+
+            if(inpNUm1 === num1){
+              document.getElementById('num1').style.backgroundColor = 'green'
+            } else if(inpNUm1 === num2 || inpNUm1 === num3 || inpNUm1 === num4){
+              document.getElementById('num1').style.backgroundColor = 'yellow'
+            } else{
+              document.getElementById('num1').style.backgroundColor = 'red'
+            }
+
+            if(inpNUm2 === num2){
+              document.getElementById('num2').style.backgroundColor = 'green'
+            } else if(inpNUm2 === num1 || inpNUm2 === num3 || inpNUm2 === num4){
+              document.getElementById('num2').style.backgroundColor = 'yellow'
+            } else{
+              document.getElementById('num2').style.backgroundColor = 'red'
+            }
+
+            if(inpNUm3 === num3){
+              document.getElementById('num3').style.backgroundColor = 'green'
+            } else if(inpNUm3 === num1 || inpNUm3 === num2 || inpNUm3 === num4){
+              document.getElementById('num3').style.backgroundColor = 'yellow'
+            } else{
+              document.getElementById('num3').style.backgroundColor = 'red'
+            }
+
+            if(inpNUm4 === num4){
+              document.getElementById('num4').style.backgroundColor = 'green'
+            } else if(inpNUm4 === num1 || inpNUm4 === num2 || inpNUm4 === num3){
+              document.getElementById('num4').style.backgroundColor = 'yellow'
+            } else{
+              document.getElementById('num4').style.backgroundColor = 'red'
+            }
+
+            if(inpNUm1 === num1 && inpNUm2 === num2 && inpNUm3 === num3 && inpNUm4 === num4){
+              document.getElementById('isValid').style.backgroundColor = 'yellow';
+              document.getElementById('isValid').innerText = `Guessed the number in attempt: ${count}`;
+            }
+
+        }
+        function clearFields() {
+          document.getElementById('num1').value = ''
+          document.getElementById('num2').value = ''
+          document.getElementById('num3').value = ''
+          document.getElementById('num4').value = ''
+          document.getElementById('num1').style.backgroundColor = "white"
+          document.getElementById('num2').style.backgroundColor = "white"
+          document.getElementById('num3').style.backgroundColor = "white"
+          document.getElementById('num4').style.backgroundColor = "white"
+          document.getElementById('isValid').style.backgroundColor = 'white';
+          document.getElementById('isValid').innerText = "";
+        }
+    </script>
+</body>
+</html>
